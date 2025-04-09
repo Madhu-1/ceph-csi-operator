@@ -30,7 +30,7 @@ jobs:
           set -xe
 
           GITHUB_TOKEN=${{ secrets.CEPH_CSI_BOT_TOKEN }}
-          GITHUB_USER=${{ secrets.CEPH_CSI_BOT_EMAIL }}
+          GITHUB_USER=${{ secrets.CEPH_CSI_BOT_USER }}
           GITHUB_EMAIL=${{ secrets.CEPH_CSI_BOT_EMAIL }}
           VERSION=${{ env.VERSION }}
 
