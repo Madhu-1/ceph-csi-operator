@@ -54,7 +54,7 @@ jobs:
           echo "uploading the package to the release"
           cr upload \
             --owner=${{ github.repository_owner }} \
-            --git-repo=${{ github.repository }} \
+            --git-repo=ceph-csi-operator \
             --token=${{ secrets.CSI_GITHUB_TOKEN }} \
             --package-path=.csi-op-release-packages
 
@@ -64,7 +64,7 @@ jobs:
           mkdir -p .cr-index
           cr index \
             --owner=${{ github.repository_owner }} \
-            --git-repo=${{ github.repository }} \
+            --git-repo=ceph-csi-operator \
             --package-path=.csi-op-release-packages \
             --token=${{ secrets.CSI_GITHUB_TOKEN }} \
             --index-path=.cr-index/index.yaml
