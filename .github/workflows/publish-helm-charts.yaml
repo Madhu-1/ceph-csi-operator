@@ -55,6 +55,7 @@ jobs:
           cr upload \
             --owner=${{ github.repository_owner }} \
             --git-repo=${{ github.repository }} \
+            --token=${{ secrets.MY_GITHUB_TOKEN }} \
             --package-path=.csi-op-release-packages
 
       - name: Update Helm repo index and push to gh-pages
@@ -65,6 +66,7 @@ jobs:
             --owner=${{ github.repository_owner }} \
             --git-repo=${{ github.repository }} \
             --package-path=.csi-op-release-packages \
+            --token=${{ secrets.MY_GITHUB_TOKEN }} \
             --index-path=.cr-index/index.yaml
 
           git config --global user.email "actions@github.com"
