@@ -60,6 +60,15 @@ jobs:
 
       - name: Update Helm repo index and push to gh-pages
         run: |
+          git remote set-url origin https://github.com/${{ github.repository }}.git
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+
+          echo "Checking if gh-pages branch exists..."
+          git fetch origin gh-pages || git checkout --orphan gh-pages
+          git checkout gh-pages
+          echo "If gh-pages branch didn't exist, it has been created."
+          
           echo "pushing it to the github pacges"
           mkdir -p .cr-index
           cr index \
@@ -68,14 +77,6 @@ jobs:
             --package-path=.csi-op-release-packages \
             --token=${{ secrets.CSI_GITHUB_TOKEN }} \
             --index-path=.cr-index/index.yaml
-
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-
-          echo "Checking if gh-pages branch exists..."
-          git fetch origin gh-pages || git checkout --orphan gh-pages
-          git checkout gh-pages
-          echo "If gh-pages branch didn't exist, it has been created."
           cp -r .cr-index/* .
           git add .
           git commit -m "Update Helm repo index from release ${{ github.event.release.tag_name }}"
