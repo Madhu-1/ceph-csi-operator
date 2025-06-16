@@ -71,6 +71,12 @@ jobs:
           git remote set-url origin https://github.com/${{ github.repository }}.git
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
+
+          git check deploy/charts/ceph-csi-operator/Chart.yaml deploy/charts/ceph-csi-drivers/Chart.yaml
+          echo "Checking if gh-pages branch exists..."
+          git fetch origin gh-pages || git checkout --orphan gh-pages
+          git checkout gh-pages
+          echo "If gh-pages branch didn't exist, it has been created."
           
           echo "pushing it to the github pacges"
           mkdir -p .cr-index
@@ -81,11 +87,7 @@ jobs:
             --token=${{ secrets.CSI_GITHUB_TOKEN }} \
             --index-path=.cr-index/index.yaml
 
-          git check deploy/charts/ceph-csi-operator/Chart.yaml deploy/charts/ceph-csi-drivers/Chart.yaml
-          echo "Checking if gh-pages branch exists..."
-          git fetch origin gh-pages || git checkout --orphan gh-pages
-          git checkout gh-pages
-          echo "If gh-pages branch didn't exist, it has been created."
+          
           cp -r .cr-index/* .
           git add .
           git commit -m "Update Helm repo index from release ${{ github.event.release.tag_name }}"
