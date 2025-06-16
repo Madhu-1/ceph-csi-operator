@@ -54,7 +54,7 @@ jobs:
           echo "uploading the package to the release"
           cr upload \
             --owner=${{ github.repository_owner }} \
-            --repo=${{ github.repository }} \
+            --git-repo=${{ github.repository }} \
             --package-path=.csi-op-release-packages
 
       - name: Update Helm repo index and push to gh-pages
@@ -63,10 +63,9 @@ jobs:
           mkdir -p .cr-index
           cr index \
             --owner=${{ github.repository_owner }} \
-            --repo=${{ github.repository }} \
+            --git-repo=${{ github.repository }} \
             --package-path=.csi-op-release-packages \
-            --index-path=.cr-index/index.yaml \
-            --charts-repo=https://${{ github.repository_owner }}.github.io/${{ github.repository }}/
+            --index-path=.cr-index/index.yaml
 
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
