@@ -66,7 +66,7 @@ jobs:
             --owner=${{ github.repository_owner }} \
             --git-repo=ceph-csi-operator \
             --token=${{ secrets.CSI_GITHUB_TOKEN }} \
-            --package-path=.csi-op-release-packages
+            --package-path=.csi-op-release-packages \
             --release-name-template="v{{ .Version }}"
 
       - name: Update Helm repo index and push to gh-pages
