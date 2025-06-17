@@ -54,7 +54,9 @@ jobs:
 
           sed -i "s/^version:.*/version: ${VERSION}/" "deploy/charts/ceph-csi-operator/Chart.yaml"
           sed -i "s/^version:.*/version: ${VERSION}/" "deploy/charts/ceph-csi-drivers/Chart.yaml"
-          
+
+          cat deploy/charts/ceph-csi-operator/Chart.yaml
+          cat deploy/charts/ceph-csi-drivers/Chart.yaml
           helm package deploy/charts/ceph-csi-operator -d .csi-op-release-packages
           echo "Packaging Helm charts for csi-driver..."
           helm package deploy/charts/ceph-csi-drivers -d .csi-op-release-packages
