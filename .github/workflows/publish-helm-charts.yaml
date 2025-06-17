@@ -85,6 +85,7 @@ jobs:
             --index-path=.cr-index/index.yaml  \
             --release-name-template=${{ github.event.release.tag_name }}
 
+          
           git add index.yaml
           git commit -m "Update Helm repo index from release ${{ github.event.release.tag_name }}"
           git push origin gh-pages -f
