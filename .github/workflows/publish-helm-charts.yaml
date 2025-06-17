@@ -82,7 +82,8 @@ jobs:
             --git-repo=ceph-csi-operator \
             --package-path=.csi-op-release-packages \
             --token=${{ secrets.CSI_GITHUB_TOKEN }} \
-            --index-path=.cr-index/index.yaml
+            --index-path=.cr-index/index.yaml  \
+            --release-name-template=${{ github.event.release.tag_name }}
 
           
           cp -r .cr-index/* .
