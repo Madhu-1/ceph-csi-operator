@@ -89,7 +89,7 @@ jobs:
 
           cp .cr-index/* . 
           git add index.yaml
-          git checkout .cr-index/ .csi-op-release-packages/
+          rm -rf .cr-index/ .csi-op-release-packages/
           
           git commit -m "Update Helm repo index from release ${{ github.event.release.tag_name }}"
           git push origin gh-pages -f
