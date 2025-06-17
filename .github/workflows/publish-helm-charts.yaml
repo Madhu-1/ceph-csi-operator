@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
 
       - name: Set release version
         id: release_version
@@ -65,6 +67,7 @@ jobs:
             --git-repo=ceph-csi-operator \
             --token=${{ secrets.CSI_GITHUB_TOKEN }} \
             --package-path=.csi-op-release-packages
+            --release-name-template="v{{ .Version }}"
 
       - name: Update Helm repo index and push to gh-pages
         run: |
@@ -73,10 +76,8 @@ jobs:
           git config --global user.name "GitHub Actions"
 
           git checkout deploy/charts/ceph-csi-operator/Chart.yaml deploy/charts/ceph-csi-drivers/Chart.yaml
-          echo "Checking if gh-pages branch exists..."
-          git fetch origin gh-pages || git checkout --orphan gh-pages
           git checkout gh-pages
-          echo "If gh-pages branch didn't exist, it has been created."
+          mkdir -p .cr-index
           
           echo "pushing it to the github pacges"
           mkdir -p .cr-index
@@ -91,7 +92,7 @@ jobs:
           cp -r .cr-index/* .
           git add .
           git commit -m "Update Helm repo index from release ${{ github.event.release.tag_name }}"
-          git push origin gh-pages
+          git push origin gh-pages -f
           
 
 
